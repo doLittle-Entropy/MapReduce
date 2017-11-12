@@ -16,7 +16,7 @@ Below is an example of how we see the C# version go.
                 .From<AddressSet>()
                 .From<MobileNumberSet>()
                 .From<EmployeeLeft>()
-                .ReduceTo<TReadModel>(_r => {
+                .ReduceTo<TReadModel>(_ => {
                     _.WithId<UserCreated>(e => e.UserId)
                     _.WithPropertiesFrom<UserCreated>(readModel, source => {  // Should be possible to just specify eventType - no arguments, meaning it will map by convention (same name)
                         readModel.Username = source.Username;
