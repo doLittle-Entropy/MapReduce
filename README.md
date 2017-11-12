@@ -29,13 +29,16 @@ Map
         });
         _.WithPropertiesFrom<MobileNumberSet>(readModel, source => {
             readModel.MobileNumber = source.Number;
-            readModel.Groups = _.WithCollectionOf<UserGroup>(_c => 
-            _c.WithpropertiesFrom<UserAddedToGroup>(readModel, source => {
-                readModel.GroupId = source.GroupId;
-            }));
-            _c.WithpropertiesFrom<GroupAdded>(readModel, source => {
-                readModel.Name = source.Name;
-            }));
+        });
+        _.WithChildRelationShipDefinedBy<UserAddedToGroup>(_r => { // Work in progress.... 
+                readModel.Groups = _.WithCollectionOf<UserGroup>(_c =>
+                _c.WithpropertiesFrom<UserAddedToGroup>(readModel, source => {
+                    readModel.GroupId = source.GroupId;
+                }));
+                _c.WithpropertiesFrom<GroupAdded>(readModel, source => {
+                    readModel.Name = source.Name;
+                }));
+            })
         });
     })
     GroupBy(_ => _.Department, _g => {
