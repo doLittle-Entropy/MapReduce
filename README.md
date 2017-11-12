@@ -5,11 +5,18 @@ Below is an example of how we see the C# version go.
 
 
 ```csharp
+Classify<GroupCreated>.AsAdd();
+Classify<GroupDeleted>.AsRemove();
+
+Classify<UserCreated>.AsAdd();
+Classify<UserDeleted>.AsRemove();
+
+
 Map
-    .CreatedWith<UserCreated>()
+    .From<UserCreated>()
     .From<AddressSet>()
     .From<MobileNumberSet>()
-    .DeletedWith<UserDeleted>()
+    .From<UserDeleted>()
     .ReduceTo<TReadModel>(_ => {
         _.WithId<UserCreated>(e => e.UserId)
         _.WithPropertiesFrom<UserCreated>(readModel, source => {  // Should be possible to just specify eventType - no arguments, meaning it will map by convention (same name)
